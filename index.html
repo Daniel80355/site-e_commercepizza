@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet"
+        href="https://img.icons8.com/external-kmg-design-outline-color-kmg-design/32/external-Pizza-food-and-restaurant-kmg-design-outline-color-kmg-design.png">
+    <link rel="stylesheet" href="style.css">
+    <script defer src="script.js"></script>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo"><img width="64" height="64" src="https://img.icons8.com/external-konkapp-outline-color-konkapp/64/external-pizza-seafood-konkapp-outline-color-konkapp.png" alt="external-pizza-seafood-konkapp-outline-color-konkapp"/>pizzaFolie</div>
+        <nav>
+            <a href="#menu">menu</a>
+            <a href="#avis">Avis</a>
+            <a href="#connexion">Connexion</a>
+            <a href="#panier" id="btn-panier" class="panier">Panier (0)</a>
+        </nav>
+    </header>
+
+    <!-- Hero section -->
+    <section class="hero">
+        <h1>La meilleure <span>Pizza</span> livrée chez toi ! 🍕</h1>
+        <button>Commander Maintenant</button>
+    </section>
+
+    <!-- Promotions / Pizza du jour -->
+    <section class="promo">
+        <div class="promo-jour">🔥 Pizza du Jour : La “Diavola” Épicée !</div>
+        <div class="promo-reduc">-20% Aujourd'hui !</div>
+    </section>
+
+
+    <!-- Menu des pizzas -->
+    <section id="menu" class="menu">
+        <h2>Nos Pizzas Populaires</h2>
+        <div class="pizza-card">
+            <img src="image/formage.jpg" alt="margherita">
+            <h3>Margherita</h3>
+            <p>8.90$</p>
+            <button class="add-to-cart" data-name="Margherita" data-price="8.90">
+                Ajouter au Panier
+            </button>
+        </div>
+
+        <div class="pizza-card">
+            <img src="image/margh.jpg" alt="pepperoni">
+            <h3>Pepperoni</h3>
+            <p>10.50$</p>
+            <button class="add-to-cart" data-name="Pepperoni" data-price="10.50">
+                Ajouter au Panier
+            </button>
+         </div>
+
+        <div class="pizza-card">
+            <img src="image/vegetarienn.jpg" alt="vegetarienne">
+            <h3>Végétarienne</h3>
+            <p>9.50$</p>
+            <button class="add-to-cart" data-name="Végétarienne" data-price="9.50">
+                Ajouter au Panier
+            </button>
+        </div>
+            <div class="pizza-card">
+                <img src="image/formage.jpg" alt="quatre-fromages">
+                <h3>Fromages</h3>
+                <p>11.00$</p>
+                <button class="add-to-cart" data-name="Quatre Fromages" data-price="11.00">
+                    Ajouter au Panier
+                </button>
+        </div> 
+    </section>
+
+
+
+    <!-- Panier -->
+    <section id="panier" class="hidden">
+        <h2>Votre panier</h2>
+        <div class="cart-items">
+            <!-- Les items seront ajoutés ici via JS -->
+        </div>
+        <button class="valider">Valider votre commande</button>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <h3>pizzaFolie 🍕</h3>
+            <p>La meilleure pizza livrée chez toi !</p>
+
+            <div class="socials">
+                <a href="#"><img width="32" height="32" src="https://img.icons8.com/fluency/32/facebook-new.png"
+                        alt="facebook-new" /></a>
+                <a href="#"><img width="32" height="32" src="https://img.icons8.com/fluency/32/twitter.png"
+                        alt="twitter" /></a>
+                <a href="#"><img width="32" height="32" src="https://img.icons8.com/fluency/32/instagram-new.png"
+                        alt="instagram-new" /></a>
+            </div>
+             <p class="copyright">© 2026 PizzaFolie - Tous droits réservés</p>
+        </div>
+    </footer>
+    <script>
+       const btnPanier = document.getElementById("btn-panier");
+const panierSidebar = document.getElementById("panier");
+const closeCartBtn = document.getElementById("close-cart");
+const overlay = document.getElementById("overlay");
+
+let panier = [];
+
+// ouvrir panier
+btnPanier.addEventListener("click", function (e) {
+    e.preventDefault();
+    panierSidebar.classList.add("active");
+    overlay.classList.add("active");
+});
+
+// fermer panier
+closeCartBtn.addEventListener("click", fermerPanier);
+overlay.addEventListener("click", fermerPanier);
+
+function fermerPanier() {
+    panierSidebar.classList.remove("active");
+    overlay.classList.remove("active");
+}
+
+// ajouter au panier
+const boutons = document.querySelectorAll(".add-to-cart");
+const cartContainer = document.querySelector(".cart-items");
+
+boutons.forEach(btn => {
+    btn.addEventListener("click", function () {
+        const name = this.dataset.name;
+        const price = parseFloat(this.dataset.price);
+
+        panier.push({ name, price });
+        afficherPanier();
+    });
+});
+
+// afficher panier
+function afficherPanier() {
+    cartContainer.innerHTML = "";
+
+    let total = 0;
+
+    panier.forEach((item, index) => {
+        total += item.price;
+
+        const div = document.createElement("div");
+        div.innerHTML = `
+            ${item.name} - ${item.price}$
+            <button onclick="supprimerItem(${index})">❌</button>
+        `;
+
+        cartContainer.appendChild(div);
+    });
+
+    const totalDiv = document.createElement("h3");
+    totalDiv.textContent = "Total: " + total.toFixed(2) + "$";
+    cartContainer.appendChild(totalDiv);
+}
+
+// supprimer
+function supprimerItem(index) {
+    panier.splice(index, 1);
+    afficherPanier();
+}
+    </script>
+</body>
+
+</html>
