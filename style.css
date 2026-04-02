@@ -118,6 +118,49 @@ nav a:hover{
 .pizza-card button:hover{
     background: #c92f3a;
 }
+/* PANIER SIDEBAR GAUCHE */
+.panier-sidebar{
+    position: fixed;
+    top: 0;
+    left: -350px; /* caché */
+    width: 300px;
+    height: 100%;
+    background: white;
+    color: #1D1D1D;
+    padding: 20px;
+    transition: 0.3s;
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+.panier-sidebar.active{
+    left: 0;
+}
+
+#close-cart{
+    background: #E63946;
+    color: white;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+/* OVERLAY */
+#overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    z-index: 999;
+}
+
+#overlay.active{
+    display: block;
+}
 
 /* PANIER */
 #panier{
